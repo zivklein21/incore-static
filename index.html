@@ -1,42 +1,103 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מדיניות פרטיות - INCORE</title>
+    <title>Legal & Information</title>
     <style>
-        body { font-family: system-ui, -apple-system, sans-serif; line-height: 1.6; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #333; }
-        h1 { color: #111; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        h2 { color: #222; margin-top: 30px; }
-        p, li { color: #555; }
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --success: #10b981;
+            --danger: #ef4444;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 560px;
+            padding: 40px 32px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        .logo-container {
+            margin-bottom: 24px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .logo-img { max-height: 100%; max-width: 180px; object-fit: contain; }
+        .tabs-nav { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+        .tab-btn {
+            flex: 1; background: none; border: none; color: var(--text-muted);
+            padding: 12px; font-size: 15px; font-weight: 600; cursor: pointer;
+            transition: all 0.2s; border-bottom: 2px solid transparent;
+        }
+        .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+        .tab-content { display: none; text-align: left; max-height: 350px; overflow-y: auto; padding-right: 8px; }
+        .tab-content.active { display: block; }
+        .tab-content h2 { font-size: 18px; margin-bottom: 12px; color: var(--text-main); }
+        .tab-content h3 { font-size: 15px; margin: 16px 0 8px; color: var(--text-main); }
+        .tab-content p { margin-bottom: 16px; font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+        .tab-content::-webkit-scrollbar { width: 6px; }
+        .tab-content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
     </style>
 </head>
 <body>
-    <h1>מדיניות פרטיות - אפליקציית INCORE</h1>
-    <p>תאריך עדכון אחרון: מאי 2026</p>
-    
-    <p>ברוכים הבאים לאפליקציית <strong>INCORE</strong>. הפרטיות שלך חשובה לנו מאוד. מסמך זה מסביר איזה מידע אנחנו אוספים וכיצד אנו משתמשים בו לצורך ניהול ורישום לאימונים בסטודיו.</p>
+    <div class="card">
+        <div class="logo-container">
+            <img src="./images/logo.png" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" alt="Logo">
+            <div class="logo-img" style="display:none; color:var(--text-muted); border:2px dashed var(--border); border-radius:8px; width:140px; height:50px; justify-content:center; align-items:center; font-size:12px;">LOGOS SPACE</div>
+        </div>
 
-    <h2>1. המידע שאנו אוספים</h2>
-    <ul>
-        <li><strong>פרטי חשבון ורישום:</strong> בעת הרשמה לאפליקציה, אנו שומרים את שמך, כתובת הדואר האלקטרוני ומספר הטלפון שלך לצורך זיהוי ואימות (באמצעות Firebase Authentication).</li>
-        <li><strong>נתוני אימונים ומנויים:</strong> מידע על שיעורים שהוזמנו, היסטוריית הגעה, וסטטוס המנוי או כרטיסיית האימונים שלך בסטודיו.</li>
-    </ul>
+        <div class="tabs-nav">
+            <button class="tab-btn active" onclick="openTab(event, 'about')">About Us</button>
+            <button class="tab-btn" onclick="openTab(event, 'privacy')">Privacy Policy</button>
+        </div>
 
-    <h2>2. כיצד אנו משתמשים במידע</h2>
-    <ul>
-        <li>כדי לאפשר לך להירשם ולבטל אימונים בזמן אמת.</li>
-        <li>כדי לשלוח לך עדכונים והודעות מערכת חשובות לגבי אימונים (ביטולים, שינוי שעות וכד').</li>
-        <li>כדי לאבטח את החשבון שלך ולמנוע גישה לא מורשית.</li>
-    </ul>
+        <div id="about" class="tab-content active">
+            <h2>About Our Platform</h2>
+            <p>Welcome to our application. We deliver an advanced, cutting-edge automated experience designed to help you build, deploy, and scale application services flawlessly.</p>
+            <p>Our goal is to simplify workflows, eliminate bottlenecks, and provide unparalleled control over your experience.</p>
+        </div>
 
-    <h2>3. שיתוף מידע עם צדדים שלישיים</h2>
-    <p>אנו <strong>לא</strong> מוכרים, משכירים או משתפים את המידע האישי שלך עם גורמי צד שלישי למטרות שיווק. המידע נשמר בצורה מאובטחת על גבי תשתית הענן של Google Firebase לצורך תפעול האפליקציה בלבד.</p>
+        <div id="privacy" class="tab-content">
+            <h2>Privacy Policy</h2>
+            <p><strong>Effective Date: May 2026</strong></p>
+            <p>Your privacy is strictly important to us. This Privacy Policy details how we handle, protect, and process the personal information and transactional data you provide when using our services.</p>
+            <h3>1. Data Collection</h3>
+            <p>We do not store your raw credit card information. All transactions are securely handled and tokenized via audited third-party clearing services (Grow Payments).</p>
+            <h3>2. Security Measures</h3>
+            <p>We enforce modern cryptographic standards (TLS 1.3) across all routing layers to shield data structures from unauthorized entities.</p>
+        </div>
+    </div>
 
-    <h2>4. אבטחת מידע</h2>
-    <p>אנו משתמשים בפרוטוקולי האבטחה המתקדמים ביותר של Cloud Firestore כדי להבטיח שרק לך ולמנהלי המערכת תהיה גישה לנתונים האישיים שלך.</p>
-
-    <h2>5. יצירת קשר</h2>
-    <p>לכל שאלה או בקשה למחיקת החשבון והמידע האישי שלך מהמערכת, ניתן לפנות אלינו באמצעות דואר אלקטרוני.</p>
+    <script>
+        function openTab(evt, tabId) {
+            const contents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < contents.length; i++) contents[i].classList.remove('active');
+            const buttons = document.getElementsByClassName('tab-btn');
+            for (let i = 0; i < buttons.length; i++) buttons[i].classList.remove('active');
+            document.getElementById(tabId).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+    </script>
 </body>
 </html>
