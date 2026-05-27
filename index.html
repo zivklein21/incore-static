@@ -242,29 +242,28 @@
             <h2>מרכז תמיכה ופניות למתאמנים</h2>
             <p>חוויתם תקלה ברישום לאימון, בעיה בעדכון המנוי או קושי טכני אחר? מלאו את פרטי הפנייה שלכם כאן והודעתכם תועבר ישירות למנהלי הסטודיו לטיפול מהיר.</p>
 
-            <form action="https://api.web3forms.com/submit" method="POST" id="studioSupportForm">
+            <form id="studioSupportForm" onsubmit="sendWeb3Form(event)">
+    
+                <input type="hidden" id="web3Key" value="2a7b4b3d-4bda-4da5-9e1f-264b33f2df0a">
+                <input type="hidden" id="emailSubject" value="SUPPORT">
                 
-                <input type="hidden" name="access_key" value="2a7b4b3d-4bda-4da5-9e1f-264b33f2df0a">
-                
-                <input type="hidden" name="subject" value="SUPPORT">
-                
-                <input type="hidden" name="redirect" value="https://zivklein21.github.io/incore-static/">
-
                 <div class="form-group">
                     <label for="clientName">שם מלא</label>
-                    <input type="text" name="שם מלא" id="clientName" required placeholder="ישראל ישראלי">
+                    <input type="text" id="clientName" required placeholder="ישראל ישראלי">
                 </div>
                 <div class="form-group">
                     <label for="clientPhone">מספר טלפון ליצירת קשר</label>
-                    <input type="tel" name="טלפון" id="clientPhone" required placeholder="050-0000000">
+                    <input type="tel" id="clientPhone" required placeholder="050-0000000">
                 </div>
                 <div class="form-group">
                     <label for="clientMessage">פירוט הבעיה או הבקשה</label>
-                    <textarea name="פירוט הבעיה" id="clientMessage" rows="5" required placeholder="אנא פרטו בצורה ברורה את השגיאה או הבקשה שלכם..."></textarea>
+                    <textarea id="clientMessage" rows="5" required placeholder="אנא פרטו בצורה ברורה את השגיאה או הבקשה שלכם..."></textarea>
                 </div>
                 
-                <button type="submit" class="action-button">שליחת פנייה לסטודיו</button>
+                <button type="submit" class="action-button" id="submitBtn">שליחת פנייה לסטודיו</button>
             </form>
+
+<div class="notification-banner" id="statusBanner">הפנייה נשלחה בהצלחה! תודה.</div>
         </section>
 
         <section id="about-route" class="view-panel">
