@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>INCORE STUDIO</title>
+    
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
     <style>
         :root {
             --purple-dark: #9B72CC;
@@ -55,18 +59,20 @@
             gap: 12px;
         }
 
+        /* Fixed the brand logo style for better image fit */
         .brand-logo {
-            width: 10px;
-            height: 10px;
-            background-color: var(--purple-very-dark);
-            color: var(--white);
-            border-radius: 10px;
+            width: 42px;
+            height: 42px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-weight: 800;
-            font-size: 14px;
-            box-shadow: 0 4px 10px rgba(92, 58, 143, 0.15);
+            overflow: hidden;
+        }
+
+        .brand-logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
         }
 
         .brand-name {
@@ -233,7 +239,7 @@
     <header>
         <div class="nav-container">
             <div class="brand-box">
-                <div class="brand-logo"><img src="images/app-icon.png"></div>
+                <div class="brand-logo"><img src="images/app-icon.png" alt="INCORE Studio Logo"></div>
                 <div class="brand-name">INCORE Support</div>
             </div>
             <nav class="nav-tabs">
@@ -301,18 +307,15 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Silent API Submission Protocol (No local mail client invocation)
         function executeSilentEmail(event) {
             event.preventDefault();
             
             const button = document.getElementById('submitBtn');
             const banner = document.getElementById('statusBanner');
             
-            // UI Feedback State
             button.disabled = true;
             button.innerText = "...שולח";
 
-            // Prepare key payload fields
             const payload = {
                 _subject: document.getElementById('emailSubject').value,
                 name: document.getElementById('clientName').value,
@@ -320,7 +323,7 @@
                 message: document.getElementById('clientMessage').value
             };
 
-            // Using Formspree's public API endpoint routed to your destination
+            // Use your Formspree endpoint ID here (e.g., https://formspree.io/f/YOUR_ID)
             fetch("https://formspree.io/f/xyzkvypb", { 
                 method: "POST",
                 headers: {
