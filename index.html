@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>INCORE STUDIO</title>
     
-    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+    <link rel="icon" type="image/png" href="./images/favicon.png">
 
     <style>
         :root {
@@ -59,7 +59,6 @@
             gap: 12px;
         }
 
-        /* Fixed the brand logo style for better image fit */
         .brand-logo {
             width: 42px;
             height: 42px;
@@ -204,19 +203,6 @@
             background-color: var(--purple-dark);
         }
 
-        .notification-banner {
-            background-color: var(--green-light);
-            border: 1px solid rgba(42, 180, 100, 0.2);
-            color: #1e5a34;
-            padding: 12px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            text-align: center;
-            font-weight: 600;
-            display: none;
-        }
-
         footer {
             text-align: center;
             padding: 24px;
@@ -239,7 +225,7 @@
     <header>
         <div class="nav-container">
             <div class="brand-box">
-                <div class="brand-logo"><img src="images/app-icon.png" alt="INCORE Studio Logo"></div>
+                <div class="brand-logo"><img src="./images/app-icon.png" alt="INCORE Studio Logo"></div>
                 <div class="brand-name">INCORE Support</div>
             </div>
             <nav class="nav-tabs">
@@ -254,25 +240,29 @@
         <section id="support-route" class="view-panel active">
             <h2>מרכז תמיכה ופניות למתאמנים</h2>
             <p>חוויתם תקלה ברישום לאימון, בעיה בעדכון המנוי או קושי טכני אחר? מלאו את פרטי הפנייה שלכם כאן והודעתכם תועבר ישירות למנהלי הסטודיו לטיפול מהיר.</p>
-            
-            <div class="notification-banner" id="statusBanner">הפנייה נשלחה בהצלחה! תודה.</div>
 
-            <form id="studioSupportForm" onsubmit="executeSilentEmail(event)">
-                <input type="hidden" id="emailSubject" value="SUPPORT">
+            <form action="https://api.web3forms.com/submit" method="POST" id="studioSupportForm">
                 
+                <input type="hidden" name="access_key" value="2a7b4b3d-4bda-4da5-9e1f-264b33f2df0a">
+                
+                <input type="hidden" name="subject" value="SUPPORT">
+                
+                <input type="hidden" name="redirect" value="https://zivklein21.github.io/incore-static/">
+
                 <div class="form-group">
                     <label for="clientName">שם מלא</label>
-                    <input type="text" id="clientName" required placeholder="ישראל ישראלי">
+                    <input type="text" name="שם מלא" id="clientName" required placeholder="ישראל ישראלי">
                 </div>
                 <div class="form-group">
                     <label for="clientPhone">מספר טלפון ליצירת קשר</label>
-                    <input type="tel" id="clientPhone" required placeholder="050-0000000">
+                    <input type="tel" name="טלפון" id="clientPhone" required placeholder="050-0000000">
                 </div>
                 <div class="form-group">
                     <label for="clientMessage">פירוט הבעיה או הבקשה</label>
-                    <textarea id="clientMessage" rows="5" required placeholder="אנא פרטו בצורה ברורה את השגיאה או הבקשה שלכם..."></textarea>
+                    <textarea name="פירוט הבעיה" id="clientMessage" rows="5" required placeholder="אנא פרטו בצורה ברורה את השגיאה או הבקשה שלכם..."></textarea>
                 </div>
-                <button type="submit" class="action-button" id="submitBtn">שליחת פנייה לסטודיו</button>
+                
+                <button type="submit" class="action-button">שליחת פנייה לסטודיו</button>
             </form>
         </section>
 
@@ -288,7 +278,7 @@
             <ul>
                 <li><strong>איסוף מידע אישי:</strong> לצורך רישום לאימונים וניהול כרטיסיות, המערכת שומרת ומציגה נתונים הכוללים את שמכם, מספר הטלפון שלכם, סטטוס המנוי הפעיל והצהרת הבריאות שלכם.</li>
                 <li><strong>סליקה ואבטחת תשלומים:</strong> כל עסקאות החידוש והרכישה המתבצעות באפליקציה מנוהלות באמצעות ממשק מאובטח חיצוני המאושר בתקן המחמיר ביותר לסליקת כרטיסי אשראי (PCI-DSS). נתוני האשראי שלכם אינם נשמרים בשרתי האפליקציה.</li>
-                <li><strong>העברת מידע לצד שלישי:</strong> המידע שלכם משמש אך ורק לצרכים התפעוליים והניהוליים של סטודיו INCORE. אנו מתחייבים לא למסור, למכור או לשתף את פרטיכם עם אף גורם פרסומי או צד שלישי אחר.</li>
+                <li><strong>העברת מידע לצד שלישי:</strong> המידע שלכם משמש אך ורק לצרכים התפעוליים והניהוליים של סטוジオ INCORE. אנו מתחייבים לא למסור, למכור או לשתף את פרטיכם עם אף גורם פרסומי או צד שלישי אחר.</li>
             </ul>
             <p>עצם השימוש באפליקציה, ביצוע הזמנות שיעורים או רכישות דרכה מהווה הסכמה מלאה למדיניות פרטיות זו.</p>
         </section>
@@ -305,49 +295,6 @@
             event.currentTarget.classList.add('active');
             document.getElementById(targetRouteId).classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function executeSilentEmail(event) {
-            event.preventDefault();
-            
-            const button = document.getElementById('submitBtn');
-            const banner = document.getElementById('statusBanner');
-            
-            button.disabled = true;
-            button.innerText = "...שולח";
-
-            const payload = {
-                _subject: document.getElementById('emailSubject').value,
-                name: document.getElementById('clientName').value,
-                phone: document.getElementById('clientPhone').value,
-                message: document.getElementById('clientMessage').value
-            };
-
-            // Use your Formspree endpoint ID here (e.g., https://formspree.io/f/YOUR_ID)
-            fetch("https://formspree.io/f/xyzkvypb", { 
-                method: "POST",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(payload)
-            })
-            .then(response => {
-                if (response.ok) {
-                    banner.style.display = 'block';
-                    document.getElementById('studioSupportForm').reset();
-                } else {
-                    alert("שגיאה בשליחת הטופס. אנא נסה שוב מאוחר יותר.");
-                }
-            })
-            .catch(error => {
-                alert("חיבור הרשת נכשל. אנא נסה שוב.");
-            })
-            .finally(() => {
-                button.disabled = false;
-                button.innerText = "שליחת פנייה לסטודיו";
-                setTimeout(() => { banner.style.display = 'none'; }, 4000);
-            });
         }
     </script>
 </body>
