@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INCORE Studio - מרכז מידע ותמיכה</title>
+    <title>INCORE STUDIO</title>
     <style>
-        /* CSS Palette Variables matching your exact branding */
         :root {
             --purple-dark: #9B72CC;
             --purple-very-dark: #5C3A8F;
@@ -32,7 +31,6 @@
             flex-direction: column;
         }
 
-        /* Top Navigation Header */
         header {
             background-color: var(--white);
             border-bottom: 1px solid rgba(155, 114, 204, 0.15);
@@ -57,7 +55,6 @@
             gap: 12px;
         }
 
-        /* Branding Logo Element */
         .brand-logo {
             width: 42px;
             height: 42px;
@@ -76,10 +73,8 @@
             font-size: 20px;
             font-weight: 700;
             color: var(--purple-very-dark);
-            letter-spacing: 0.5px;
         }
 
-        /* Main Tabs menu */
         .nav-tabs {
             display: flex;
             gap: 8px;
@@ -105,7 +100,6 @@
             box-shadow: 0 2px 6px rgba(92, 58, 143, 0.08);
         }
 
-        /* Main Viewport Container */
         main {
             flex: 1;
             max-width: 700px;
@@ -121,7 +115,7 @@
             padding: 35px 30px;
             box-shadow: 0 10px 30px rgba(92, 58, 143, 0.06);
             border: 1px solid rgba(155, 114, 204, 0.1);
-            animation: panelFade 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: panelFade 0.35s ease;
         }
 
         .view-panel.active {
@@ -158,7 +152,6 @@
             margin-bottom: 8px;
         }
 
-        /* Interactive Support Form Elements */
         .form-group {
             margin-bottom: 20px;
         }
@@ -218,7 +211,6 @@
             display: none;
         }
 
-        /* Footer context */
         footer {
             text-align: center;
             padding: 24px;
@@ -227,27 +219,12 @@
             margin-top: auto;
         }
 
-        /* Mobile Optimization overrides */
         @media (max-width: 600px) {
-            .nav-container {
-                flex-direction: column;
-                gap: 16px;
-            }
-            .nav-tabs {
-                width: 100%;
-            }
-            .tab-trigger {
-                flex: 1;
-                text-align: center;
-                padding: 10px 8px;
-                font-size: 14px;
-            }
-            main {
-                margin: 20px auto;
-            }
-            .view-panel {
-                padding: 25px 20px;
-            }
+            .nav-container { flex-direction: column; gap: 16px; }
+            .nav-tabs { width: 100%; }
+            .tab-trigger { flex: 1; text-align: center; padding: 10px 8px; font-size: 14px; }
+            main { margin: 20px auto; }
+            .view-panel { padding: 25px 20px; }
         }
     </style>
 </head>
@@ -268,14 +245,15 @@
     </header>
 
     <main>
-        
         <section id="support-route" class="view-panel active">
             <h2>מרכז תמיכה ופניות למתאמנים</h2>
             <p>חוויתם תקלה ברישום לאימון, בעיה בעדכון המנוי או קושי טכני אחר? מלאו את פרטי הפנייה שלכם כאן והודעתכם תועבר ישירות למנהלי הסטודיו לטיפול מהיר.</p>
             
-            <div class="notification-banner" id="statusBanner">מנתב אותך כעת אל אפליקציית המייל...</div>
+            <div class="notification-banner" id="statusBanner">הפנייה נשלחה בהצלחה! תודה.</div>
 
-            <form id="studioSupportForm" onsubmit="executeEmailPipeline(event)">
+            <form id="studioSupportForm" onsubmit="executeSilentEmail(event)">
+                <input type="hidden" id="emailSubject" value="SUPPORT">
+                
                 <div class="form-group">
                     <label for="clientName">שם מלא</label>
                     <input type="text" id="clientName" required placeholder="ישראל ישראלי">
@@ -286,9 +264,9 @@
                 </div>
                 <div class="form-group">
                     <label for="clientMessage">פירוט הבעיה או הבקשה</label>
-                    <textarea id="clientMessage" rows="5" required placeholder="אנא פרטו בצורה ברורה את השגיאה או הבקשה שלכם כדי שנוכל לסייע בצורה הטובה ביותר..."></textarea>
+                    <textarea id="clientMessage" rows="5" required placeholder="אנא פרטו בצורה ברורה את השגיאה או הבקשה שלכם..."></textarea>
                 </div>
-                <button type="submit" class="action-button">שליחת פנייה לסטודיו</button>
+                <button type="submit" class="action-button" id="submitBtn">שליחת פנייה לסטודיו</button>
             </form>
         </section>
 
@@ -308,7 +286,6 @@
             </ul>
             <p>עצם השימוש באפליקציה, ביצוע הזמנות שיעורים או רכישות דרכה מהווה הסכמה מלאה למדיניות פרטיות זו.</p>
         </section>
-
     </main>
 
     <footer>
@@ -316,57 +293,58 @@
     </footer>
 
     <script>
-        // Single-page Client Navigation Engine
         function navigateRoute(event, targetRouteId) {
-            // Remove active states from DOM controls
             document.querySelectorAll('.tab-trigger').forEach(trigger => trigger.classList.remove('active'));
             document.querySelectorAll('.view-panel').forEach(panel => panel.classList.remove('active'));
-
-            // Instantiate state on targeted structural elements
             event.currentTarget.classList.add('active');
             document.getElementById(targetRouteId).classList.add('active');
-            
-            // Scroll neatly to top on route change for mobile safety
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Native System Email Redirection Handler
-        function executeEmailPipeline(event) {
+        // Silent API Submission Protocol (No local mail client invocation)
+        function executeSilentEmail(event) {
             event.preventDefault();
             
-            // Target recipient configuration
-            const targetStudioEmail = "support@incorestudio.co.il"; 
-            
-            // Extract core field data
-            const nameField = document.getElementById('clientName').value;
-            const phoneField = document.getElementById('clientPhone').value;
-            const msgField = document.getElementById('clientMessage').value;
-
-            // Construct sanitized Mailto parameters
-            const mailSubject = encodeURIComponent(`פנייה חדשה מאפליקציית INCORE - ${nameField}`);
-            const mailBody = encodeURIComponent(
-                `שלום לצוות סטודיו INCORE,\n\n` +
-                `נתקבלה פניית תמיכה חדשה ישירות מהאפליקציה:\n` +
-                `----------------------------------------\n` +
-                `שם המתאמן/ת: ${nameField}\n` +
-                `טלפון ליצירת קשר: ${phoneField}\n\n` +
-                `פירוט הבעיה:\n${msgField}\n` +
-                `----------------------------------------\n\n` +
-                `הודעה זו הופקה אוטומטית דרך דף התמיכה הרשמי.`
-            );
-
-            // Display UX success state banner
+            const button = document.getElementById('submitBtn');
             const banner = document.getElementById('statusBanner');
-            banner.style.display = 'block';
+            
+            // UI Feedback State
+            button.disabled = true;
+            button.innerText = "...שולח";
 
-            // Trigger system mail protocol redirect
-            window.location.href = `mailto:${targetStudioEmail}?subject=${mailSubject}&body=${mailBody}`;
+            // Prepare key payload fields
+            const payload = {
+                _subject: document.getElementById('emailSubject').value,
+                name: document.getElementById('clientName').value,
+                phone: document.getElementById('clientPhone').value,
+                message: document.getElementById('clientMessage').value
+            };
 
-            // Gracefully clear inputs and cycle animation state
-            setTimeout(() => {
-                document.getElementById('studioSupportForm').reset();
-                banner.style.display = 'none';
-            }, 2500);
+            // Using Formspree's public API endpoint routed to your destination
+            fetch("https://formspree.io/f/xyzkvypb", { 
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => {
+                if (response.ok) {
+                    banner.style.display = 'block';
+                    document.getElementById('studioSupportForm').reset();
+                } else {
+                    alert("שגיאה בשליחת הטופס. אנא נסה שוב מאוחר יותר.");
+                }
+            })
+            .catch(error => {
+                alert("חיבור הרשת נכשל. אנא נסה שוב.");
+            })
+            .finally(() => {
+                button.disabled = false;
+                button.innerText = "שליחת פנייה לסטודיו";
+                setTimeout(() => { banner.style.display = 'none'; }, 4000);
+            });
         }
     </script>
 </body>
