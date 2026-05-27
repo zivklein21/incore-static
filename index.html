@@ -1,102 +1,372 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Legal & Information</title>
+    <title>INCORE Studio - מרכז מידע ותמיכה</title>
     <style>
+        /* CSS Palette Variables matching your exact branding */
         :root {
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
-            --success: #10b981;
-            --danger: #ef4444;
-            --bg-dark: #0f172a;
-            --bg-card: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border: #334155;
+            --purple-dark: #9B72CC;
+            --purple-very-dark: #5C3A8F;
+            --purple-very-light: #F3EEFF;
+            --purple-light: #D4A8FF;
+            --green-light: #EAF6ED;
+            --text-main: #2A1B4E;
+            --text-muted: #645580;
+            --white: #FFFFFF;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-            background-color: var(--bg-dark);
+            background-color: var(--purple-very-light);
             color: var(--text-main);
-            display: flex;
-            justify-content: center;
-            align-items: center;
             min-height: 100vh;
-            padding: 20px;
+            display: flex;
+            flex-direction: column;
         }
-        .card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            width: 100%;
-            max-width: 560px;
-            padding: 40px 32px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+
+        /* Top Navigation Header */
+        header {
+            background-color: var(--white);
+            border-bottom: 1px solid rgba(155, 114, 204, 0.15);
+            padding: 15px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(92, 58, 143, 0.04);
         }
-        .logo-container {
-            margin-bottom: 24px;
-            height: 60px;
+
+        .nav-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Branding Logo Element */
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+            background-color: var(--purple-very-dark);
+            color: var(--white);
+            border-radius: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
+            font-weight: 800;
+            font-size: 14px;
+            box-shadow: 0 4px 10px rgba(92, 58, 143, 0.15);
         }
-        .logo-img { max-height: 100%; max-width: 180px; object-fit: contain; }
-        .tabs-nav { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
-        .tab-btn {
-            flex: 1; background: none; border: none; color: var(--text-muted);
-            padding: 12px; font-size: 15px; font-weight: 600; cursor: pointer;
-            transition: all 0.2s; border-bottom: 2px solid transparent;
+
+        .brand-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--purple-very-dark);
+            letter-spacing: 0.5px;
         }
-        .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
-        .tab-content { display: none; text-align: left; max-height: 350px; overflow-y: auto; padding-right: 8px; }
-        .tab-content.active { display: block; }
-        .tab-content h2 { font-size: 18px; margin-bottom: 12px; color: var(--text-main); }
-        .tab-content h3 { font-size: 15px; margin: 16px 0 8px; color: var(--text-main); }
-        .tab-content p { margin-bottom: 16px; font-size: 14px; color: var(--text-muted); line-height: 1.6; }
-        .tab-content::-webkit-scrollbar { width: 6px; }
-        .tab-content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+        /* Main Tabs menu */
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            background-color: rgba(155, 114, 204, 0.08);
+            padding: 4px;
+            border-radius: 10px;
+        }
+
+        .tab-trigger {
+            padding: 10px 20px;
+            border: none;
+            background: none;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--purple-very-dark);
+            cursor: pointer;
+            border-radius: 7px;
+            transition: all 0.25s ease;
+        }
+
+        .tab-trigger.active {
+            background-color: var(--white);
+            box-shadow: 0 2px 6px rgba(92, 58, 143, 0.08);
+        }
+
+        /* Main Viewport Container */
+        main {
+            flex: 1;
+            max-width: 700px;
+            width: 100%;
+            margin: 40px auto;
+            padding: 0 24px;
+        }
+
+        .view-panel {
+            display: none;
+            background: var(--white);
+            border-radius: 20px;
+            padding: 35px 30px;
+            box-shadow: 0 10px 30px rgba(92, 58, 143, 0.06);
+            border: 1px solid rgba(155, 114, 204, 0.1);
+            animation: panelFade 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .view-panel.active {
+            display: block;
+        }
+
+        @keyframes panelFade {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-size: 22px;
+            color: var(--purple-very-dark);
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        p {
+            line-height: 1.65;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        ul {
+            margin-right: 24px;
+            margin-bottom: 20px;
+            line-height: 1.7;
+            color: var(--text-muted);
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* Interactive Support Form Elements */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--purple-very-dark);
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid rgba(155, 114, 204, 0.25);
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+            background-color: #FAFAFF;
+            transition: all 0.2s ease;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--purple-dark);
+            background-color: var(--white);
+            box-shadow: 0 0 0 4px rgba(155, 114, 204, 0.1);
+        }
+
+        .action-button {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--purple-very-dark);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .action-button:hover {
+            background-color: var(--purple-dark);
+        }
+
+        .notification-banner {
+            background-color: var(--green-light);
+            border: 1px solid rgba(42, 180, 100, 0.2);
+            color: #1e5a34;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+
+        /* Footer context */
+        footer {
+            text-align: center;
+            padding: 24px;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: auto;
+        }
+
+        /* Mobile Optimization overrides */
+        @media (max-width: 600px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 16px;
+            }
+            .nav-tabs {
+                width: 100%;
+            }
+            .tab-trigger {
+                flex: 1;
+                text-align: center;
+                padding: 10px 8px;
+                font-size: 14px;
+            }
+            main {
+                margin: 20px auto;
+            }
+            .view-panel {
+                padding: 25px 20px;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="card">
-        <div class="logo-container">
-            <img src="./images/logo.png" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" alt="Logo">
-            <div class="logo-img" style="display:none; color:var(--text-muted); border:2px dashed var(--border); border-radius:8px; width:140px; height:50px; justify-content:center; align-items:center; font-size:12px;">LOGOS SPACE</div>
-        </div>
 
-        <div class="tabs-nav">
-            <button class="tab-btn active" onclick="openTab(event, 'about')">About Us</button>
-            <button class="tab-btn" onclick="openTab(event, 'privacy')">Privacy Policy</button>
+    <header>
+        <div class="nav-container">
+            <div class="brand-box">
+                <div class="brand-logo">IN</div>
+                <div class="brand-name">INCORE Studio</div>
+            </div>
+            <nav class="nav-tabs">
+                <button class="tab-trigger active" onclick="navigateRoute(event, 'support-route')">תמיכה</button>
+                <button class="tab-trigger" onclick="navigateRoute(event, 'about-route')">אודות</button>
+                <button class="tab-trigger" onclick="navigateRoute(event, 'privacy-route')">פרטיות</button>
+            </nav>
         </div>
+    </header>
 
-        <div id="about" class="tab-content active">
-            <h2>About Our Platform</h2>
-            <p>Welcome to our application. We deliver an advanced, cutting-edge automated experience designed to help you build, deploy, and scale application services flawlessly.</p>
-            <p>Our goal is to simplify workflows, eliminate bottlenecks, and provide unparalleled control over your experience.</p>
-        </div>
+    <main>
+        
+        <section id="support-route" class="view-panel active">
+            <h2>מרכז תמיכה ופניות למתאמנים</h2>
+            <p>חוויתם תקלה ברישום לאימון, בעיה בעדכון המנוי או קושי טכני אחר? מלאו את פרטי הפנייה שלכם כאן והודעתכם תועבר ישירות למנהלי הסטודיו לטיפול מהיר.</p>
+            
+            <div class="notification-banner" id="statusBanner">מנתב אותך כעת אל אפליקציית המייל...</div>
 
-        <div id="privacy" class="tab-content">
-            <h2>Privacy Policy</h2>
-            <p><strong>Effective Date: May 2026</strong></p>
-            <p>Your privacy is strictly important to us. This Privacy Policy details how we handle, protect, and process the personal information and transactional data you provide when using our services.</p>
-            <h3>1. Data Collection</h3>
-            <p>We do not store your raw credit card information. All transactions are securely handled and tokenized via audited third-party clearing services (Grow Payments).</p>
-            <h3>2. Security Measures</h3>
-            <p>We enforce modern cryptographic standards (TLS 1.3) across all routing layers to shield data structures from unauthorized entities.</p>
-        </div>
-    </div>
+            <form id="studioSupportForm" onsubmit="executeEmailPipeline(event)">
+                <div class="form-group">
+                    <label for="clientName">שם מלא</label>
+                    <input type="text" id="clientName" required placeholder="ישראל ישראלי">
+                </div>
+                <div class="form-group">
+                    <label for="clientPhone">מספר טלפון ליצירת קשר</label>
+                    <input type="tel" id="clientPhone" required placeholder="050-0000000">
+                </div>
+                <div class="form-group">
+                    <label for="clientMessage">פירוט הבעיה או הבקשה</label>
+                    <textarea id="clientMessage" rows="5" required placeholder="אנא פרטו בצורה ברורה את השגיאה או הבקשה שלכם כדי שנוכל לסייע בצורה הטובה ביותר..."></textarea>
+                </div>
+                <button type="submit" class="action-button">שליחת פנייה לסטודיו</button>
+            </form>
+        </section>
+
+        <section id="about-route" class="view-panel">
+            <h2>אודות סטודיו INCORE</h2>
+            <p>סטודיו INCORE הנו מרחב מתקדם המשלב בין כושר, תנועה מקצועית ומערכת אימונים פונקציונלית המותאמת בדיוק לצרכים שלכם. אנו מאמינים במצוינות, ליווי מדויק ובניית מומנטום אישי לכל מתאמן ומתאמנת.</p>
+            <p>כדי להבטיח ניהול נוח ויעיל של שגרת האימונים שלכם, העמדנו לרשותכם את אפליקציית החברים הרשמית. באמצעות האפליקציה תוכלו לצפות ביומן הסטודיו המעודכן, להזמין מקום לשיעורים, לנהל את מסלול המנוי שלכם ולחתום על טפסים הכרחיים במהירות.</p>
+        </section>
+
+        <section id="privacy-route" class="view-panel">
+            <h2>מדיניות פרטיות ותנאי שימוש באפליקציה</h2>
+            <p>אפליקציית INCORE פועלת תחת סטנדרטים קפדניים של אבטחה ושמירה על מידע. מטרת הצהרה זו לפרט את אופן ניהול המידע האישי שלכם בתוך המערכת:</p>
+            <ul>
+                <li><strong>איסוף מידע אישי:</strong> לצורך רישום לאימונים וניהול כרטיסיות, המערכת שומרת ומציגה נתונים הכוללים את שמכם, מספר הטלפון שלכם, סטטוס המנוי הפעיל והצהרת הבריאות שלכם.</li>
+                <li><strong>סליקה ואבטחת תשלומים:</strong> כל עסקאות החידוש והרכישה המתבצעות באפליקציה מנוהלות באמצעות ממשק מאובטח חיצוני המאושר בתקן המחמיר ביותר לסליקת כרטיסי אשראי (PCI-DSS). נתוני האשראי שלכם אינם נשמרים בשרתי האפליקציה.</li>
+                <li><strong>העברת מידע לצד שלישי:</strong> המידע שלכם משמש אך ורק לצרכים התפעוליים והניהוליים של סטודיו INCORE. אנו מתחייבים לא למסור, למכור או לשתף את פרטיכם עם אף גורם פרסומי או צד שלישי אחר.</li>
+            </ul>
+            <p>עצם השימוש באפליקציה, ביצוע הזמנות שיעורים או רכישות דרכה מהווה הסכמה מלאה למדיניות פרטיות זו.</p>
+        </section>
+
+    </main>
+
+    <footer>
+        &copy; 2026 INCORE Studio. כל הזכויות שמורות.
+    </footer>
 
     <script>
-        function openTab(evt, tabId) {
-            const contents = document.getElementsByClassName('tab-content');
-            for (let i = 0; i < contents.length; i++) contents[i].classList.remove('active');
-            const buttons = document.getElementsByClassName('tab-btn');
-            for (let i = 0; i < buttons.length; i++) buttons[i].classList.remove('active');
-            document.getElementById(tabId).classList.add('active');
-            evt.currentTarget.classList.add('active');
+        // Single-page Client Navigation Engine
+        function navigateRoute(event, targetRouteId) {
+            // Remove active states from DOM controls
+            document.querySelectorAll('.tab-trigger').forEach(trigger => trigger.classList.remove('active'));
+            document.querySelectorAll('.view-panel').forEach(panel => panel.classList.remove('active'));
+
+            // Instantiate state on targeted structural elements
+            event.currentTarget.classList.add('active');
+            document.getElementById(targetRouteId).classList.add('active');
+            
+            // Scroll neatly to top on route change for mobile safety
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Native System Email Redirection Handler
+        function executeEmailPipeline(event) {
+            event.preventDefault();
+            
+            // Target recipient configuration
+            const targetStudioEmail = "support@incorestudio.co.il"; 
+            
+            // Extract core field data
+            const nameField = document.getElementById('clientName').value;
+            const phoneField = document.getElementById('clientPhone').value;
+            const msgField = document.getElementById('clientMessage').value;
+
+            // Construct sanitized Mailto parameters
+            const mailSubject = encodeURIComponent(`פנייה חדשה מאפליקציית INCORE - ${nameField}`);
+            const mailBody = encodeURIComponent(
+                `שלום לצוות סטודיו INCORE,\n\n` +
+                `נתקבלה פניית תמיכה חדשה ישירות מהאפליקציה:\n` +
+                `----------------------------------------\n` +
+                `שם המתאמן/ת: ${nameField}\n` +
+                `טלפון ליצירת קשר: ${phoneField}\n\n` +
+                `פירוט הבעיה:\n${msgField}\n` +
+                `----------------------------------------\n\n` +
+                `הודעה זו הופקה אוטומטית דרך דף התמיכה הרשמי.`
+            );
+
+            // Display UX success state banner
+            const banner = document.getElementById('statusBanner');
+            banner.style.display = 'block';
+
+            // Trigger system mail protocol redirect
+            window.location.href = `mailto:${targetStudioEmail}?subject=${mailSubject}&body=${mailBody}`;
+
+            // Gracefully clear inputs and cycle animation state
+            setTimeout(() => {
+                document.getElementById('studioSupportForm').reset();
+                banner.style.display = 'none';
+            }, 2500);
         }
     </script>
 </body>
