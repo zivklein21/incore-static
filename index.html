@@ -72,7 +72,6 @@
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
-            border-radius: 5px;
         }
 
         .brand-name {
@@ -147,17 +146,6 @@
             font-size: 15px;
         }
 
-        ul {
-            margin-right: 24px;
-            margin-bottom: 20px;
-            line-height: 1.7;
-            color: var(--text-muted);
-        }
-
-        li {
-            margin-bottom: 8px;
-        }
-
         .form-group {
             margin-bottom: 20px;
         }
@@ -204,6 +192,20 @@
             background-color: var(--purple-dark);
         }
 
+        /* הבאנר מוסתר כברירת מחדל */
+        .notification-banner {
+            background-color: var(--green-light);
+            border: 1px solid rgba(42, 180, 100, 0.2);
+            color: #1e5a34;
+            padding: 14px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 15px;
+            text-align: center;
+            font-weight: 600;
+            display: none; 
+        }
+
         footer {
             text-align: center;
             padding: 24px;
@@ -243,7 +245,6 @@
             <p>חוויתם תקלה ברישום לאימון, בעיה בעדכון המנוי או קושי טכני אחר? מלאו את פרטי הפנייה שלכם כאן והודעתכם תועבר ישירות למנהלי הסטודיו לטיפול מהיר.</p>
 
             <form id="studioSupportForm" onsubmit="sendWeb3Form(event)">
-    
                 <input type="hidden" id="web3Key" value="2a7b4b3d-4bda-4da5-9e1f-264b33f2df0a">
                 <input type="hidden" id="emailSubject" value="SUPPORT">
                 
@@ -263,7 +264,7 @@
                 <button type="submit" class="action-button" id="submitBtn">שליחת פנייה לסטודיו</button>
             </form>
 
-<div class="notification-banner" id="statusBanner">הפנייה נשלחה בהצלחה! תודה.</div>
+            <div class="notification-banner" id="statusBanner">הפנייה נשלחה בהצלחה! תודה.</div>
         </section>
 
         <section id="about-route" class="view-panel">
@@ -278,7 +279,7 @@
             <ul>
                 <li><strong>איסוף מידע אישי:</strong> לצורך רישום לאימונים וניהול כרטיסיות, המערכת שומרת ומציגה נתונים הכוללים את שמכם, מספר הטלפון שלכם, סטטוס המנוי הפעיל והצהרת הבריאות שלכם.</li>
                 <li><strong>סליקה ואבטחת תשלומים:</strong> כל עסקאות החידוש והרכישה המתבצעות באפליקציה מנוהלות באמצעות ממשק מאובטח חיצוני המאושר בתקן המחמיר ביותר לסליקת כרטיסי אשראי (PCI-DSS). נתוני האשראי שלכם אינם נשמרים בשרתי האפליקציה.</li>
-                <li><strong>העברת מידע לצד שלישי:</strong> המידע שלכם משמש אך ורק לצרכים התפעוליים והניהוליים של סטוジオ INCORE. אנו מתחייבים לא למסור, למכור או לשתף את פרטיכם עם אף גורם פרסומי או צד שלישי אחר.</li>
+                <li><strong>העברת מידע לצד שלישי:</strong> המידע שלכם משמש אך ורק לצרכים התפעוליים והניהוליים של סטודיו INCORE. אנו מתחייבים לא למסור, למכור או לשתף את פרטיכם עם אף גורם פרסומי או צד שלישי אחר.</li>
             </ul>
             <p>עצם השימוש באפליקציה, ביצוע הזמנות שיעורים או רכישות דרכה מהווה הסכמה מלאה למדיניות פרטיות זו.</p>
         </section>
@@ -295,6 +296,50 @@
             event.currentTarget.classList.add('active');
             document.getElementById(targetRouteId).classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function sendWeb3Form(event) {
+            event.preventDefault();
+            
+            const button = document.getElementById('submitBtn');
+            const banner = document.getElementById('statusBanner');
+            
+            button.disabled = true;
+            button.innerText = "...שולח";
+
+            const payload = {
+                access_key: document.getElementById('web3Key').value,
+                subject: document.getElementById('emailSubject').value,
+                name: document.getElementById('clientName').value,
+                phone: document.getElementById('clientPhone').value,
+                message: document.getElementById('clientMessage').value
+            };
+
+            fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(async (response) => {
+                const json = await response.json();
+                if (response.status === 200) {
+                    banner.style.display = 'block'; // מציג את הודעת ההצלחה רק עכשיו
+                    document.getElementById('studioSupportForm').reset();
+                } else {
+                    alert("שגיאה: " + json.message);
+                }
+            })
+            .catch(error => {
+                alert("שליחת הטופס נכשלה. בדוק את חיבור האינטרנט.");
+            })
+            .finally(() => {
+                button.disabled = false;
+                button.innerText = "שליחת פנייה לסטודיו";
+                setTimeout(() => { banner.style.display = 'none'; }, 5000);
+            });
         }
     </script>
 </body>
