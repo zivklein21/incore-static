@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INCORE - אודות</title>
+
+    <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+
+    <style>
+        :root {
+            --purple-dark: #9B72CC;
+            --purple-very-dark: #5C3A8F;
+            --purple-very-light: #F3EEFF;
+            --purple-light: #D4A8FF;
+            --green-light: #EAF6ED;
+            --text-main: #2A1B4E;
+            --text-muted: #645580;
+            --white: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--purple-very-light);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: var(--white);
+            border-bottom: 1px solid rgba(155, 114, 204, 0.15);
+            padding: 15px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(92, 58, 143, 0.04);
+        }
+
+        .nav-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .brand-logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .brand-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--purple-very-dark);
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            background-color: rgba(155, 114, 204, 0.08);
+            padding: 4px;
+            border-radius: 10px;
+        }
+
+        .tab-trigger {
+            padding: 10px 20px;
+            border: none;
+            background: none;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--purple-very-dark);
+            cursor: pointer;
+            border-radius: 7px;
+            transition: all 0.25s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .tab-trigger.active {
+            background-color: var(--white);
+            box-shadow: 0 2px 6px rgba(92, 58, 143, 0.08);
+        }
+
+        main {
+            flex: 1;
+            max-width: 700px;
+            width: 100%;
+            margin: 40px auto;
+            padding: 0 24px;
+        }
+
+        .view-panel {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 35px 30px;
+            box-shadow: 0 10px 30px rgba(92, 58, 143, 0.06);
+            border: 1px solid rgba(155, 114, 204, 0.1);
+            animation: panelFade 0.35s ease;
+        }
+
+        @keyframes panelFade {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-size: 22px;
+            color: var(--purple-very-dark);
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        p {
+            line-height: 1.65;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--purple-very-dark);
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid rgba(155, 114, 204, 0.25);
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+            background-color: #FAFAFF;
+            transition: all 0.2s ease;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--purple-dark);
+            background-color: var(--white);
+            box-shadow: 0 0 0 4px rgba(155, 114, 204, 0.1);
+        }
+
+        .action-button {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--purple-very-dark);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .action-button:hover {
+            background-color: var(--purple-dark);
+        }
+
+        .notification-banner {
+            background-color: var(--green-light);
+            border: 1px solid rgba(42, 180, 100, 0.2);
+            color: #1e5a34;
+            padding: 14px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 15px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 24px;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: auto;
+        }
+
+        @media (max-width: 600px) {
+            .nav-container { flex-direction: column; gap: 16px; }
+            .nav-tabs { width: 100%; }
+            .tab-trigger { flex: 1; text-align: center; padding: 10px 8px; font-size: 14px; }
+            main { margin: 20px auto; }
+            .view-panel { padding: 25px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a class="brand-box" href="../support/">
+                <div class="brand-logo"><img src="../images/app-icon.png" alt="INCORE Studio Logo"></div>
+                <div class="brand-name">INCORE Support</div>
+            </a>
+            <nav class="nav-tabs">
+                <a class="tab-trigger" href="../support/">תמיכה</a>
+                <a class="tab-trigger active" href="../about/">אודות</a>
+                <a class="tab-trigger" href="../privacy/">פרטיות</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="view-panel">
+            <h2>אודות סטודיו INCORE</h2>
+            <p>סטודיו INCORE הנו מרחב מתקדם המשלב בין כושר, תנועה מקצועית ומערכת אימונים פונקציונלית המותאמת בדיוק לצרכים שלכם. אנו מאמינים במצוינות, ליווי מדויק ובניית מומנטום אישי לכל מתאמן ומתאמנת.</p>
+            <p>כדי להבטיח ניהול נוח ויעיל של שגרת האימונים שלכם, העמדנו לרשותכם את אפליקציית החברים הרשמית. באמצעות האפליקציה תוכלו לצפות ביומן הסטודיו המעודכן, להזמין מקום לשיעורים, לנהל את מסלול המנוי שלכם ולחתום על טפסים הכרחיים במהירות.</p>
+        </section>
+    </main>
+
+    <footer>
+        &copy; 2026 INCORE Studio. כל הזכויות שמורות.
+    </footer>
+
+</body>
+</html>
